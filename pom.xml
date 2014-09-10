@@ -46,6 +46,7 @@
     <jfinal.version>1.8</jfinal.version>
     <coffeescript.version>1.7.1</coffeescript.version>
     <jfinal-slf4j.version>0.1</jfinal-slf4j.version>
+    <jfinal-utils.version>0.1</jfinal-utils.version>
     <commons-io.version>2.4</commons-io.version>
     <rhino.version>1.7R4</rhino.version>
     <plexus-container.version>1.5.5</plexus-container.version>
@@ -93,6 +94,12 @@
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
       <version>${commons-io.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>cn.dreampie</groupId>
+      <artifactId>jfinal-utils</artifactId>
+      <version>${jfinal-utils.version}</version>
     </dependency>
 
     <dependency>
