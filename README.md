@@ -1,4 +1,4 @@
-jfinal-slf4j
+jfinal-coffeescript
 ============
 
-jfinal  slf4j  log api
+jfinal  coffeescript  plugin
