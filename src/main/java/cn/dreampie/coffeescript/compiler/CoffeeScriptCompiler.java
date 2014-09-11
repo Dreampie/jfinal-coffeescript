@@ -188,7 +188,7 @@ public class CoffeeScriptCompiler extends AbstractCoffeeScript {
       try {
         CoffeeSource coffeeSource = new CoffeeSource(input);
         long coffeeLastModified = coffeeSource.getLastModifiedIncludingImports();
-        if ((force || !output.exists() || output.lastModified() < coffeeLastModified) && lastErrorModified < coffeeLastModified) {
+        if (!output.exists() || (force || output.lastModified() < coffeeLastModified) && lastErrorModified < coffeeLastModified) {
           lastErrorModified = coffeeLastModified;
           long compilationStarted = System.currentTimeMillis();
           logger.info("Compiling COFFEE source: " + file);
