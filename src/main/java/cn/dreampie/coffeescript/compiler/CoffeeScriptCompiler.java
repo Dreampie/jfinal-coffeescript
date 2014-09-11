@@ -89,7 +89,7 @@ public class CoffeeScriptCompiler extends AbstractCoffeeScript {
   /**
    * Execute the MOJO.
    *
-   * @throws cn.dreampie.common.plugin.coffeescript.compiler.CoffeeException if something unexpected occurs.
+   * @throws cn.dreampie.coffeescript.compiler.CoffeeException if something unexpected occurs.
    */
   public void execute() throws CoffeeException {
     if (logger.isDebugEnabled()) {
