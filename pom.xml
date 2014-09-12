@@ -8,6 +8,7 @@
   <artifactId>jfinal-coffeescript</artifactId>
   <version>0.1</version>
   <packaging>jar</packaging>
+  <name>jfinal-coffeescript</name>
   <description>jfinal coffeescript plugins</description>
   <url>https://github.com/Dreampie/jfinal-coffeescript</url>
 
