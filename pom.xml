@@ -80,8 +80,24 @@
       <version>${plexus-container.version}</version>
       <exclusions>
         <exclusion>
+          <artifactId>plexus-classworlds</artifactId>
+          <groupId>org.codehaus.plexus</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>xbean-reflect</artifactId>
+          <groupId>org.apache.xbean</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>google-collections</artifactId>
+          <groupId>com.google.collections</groupId>
+        </exclusion>
+        <exclusion>
           <artifactId>junit</artifactId>
           <groupId>junit</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>plexus-utils</artifactId>
+          <groupId>org.codehaus.plexus</groupId>
         </exclusion>
         <exclusion>
           <artifactId>log4j</artifactId>
