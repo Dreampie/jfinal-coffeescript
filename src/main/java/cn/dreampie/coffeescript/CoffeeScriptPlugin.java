@@ -52,10 +52,10 @@ public class CoffeeScriptPlugin implements IPlugin {
 
   @Override
   public boolean start() {
-    CoffeeExecuteThread run = new CoffeeExecuteThread(coffeeScriptCompiler, restartInterval);
-    CoffeeExecuteListener listen = new CoffeeExecuteListener(run);
-    run.addObserver(listen);
-    new Thread(run).start();
+    CoffeeExecuteThread thread = new CoffeeExecuteThread(coffeeScriptCompiler, restartInterval);
+    CoffeeExecuteListener listen = new CoffeeExecuteListener(thread);
+    thread.addObserver(listen);
+    new Thread(thread).start();
     return true;
   }
 

@@ -84,10 +84,10 @@ public class CoffeeSource {
     BOMInputStream inputStream = new BOMInputStream(resource.getInputStream());
     try {
       if (inputStream.hasBOM()) {
-        logger.debug("BOM found %s", inputStream.getBOMCharsetName());
+        logger.debug("BOM found " + resource.getName() + ":" + inputStream.getBOMCharsetName());
         return IOUtils.toString(inputStream, inputStream.getBOMCharsetName());
       } else {
-        logger.debug("Using charset " + charset.name());
+        logger.debug("Using charset " + resource.getName() + ":" + charset.name());
         return IOUtils.toString(inputStream, charset.name());
       }
     } finally {
