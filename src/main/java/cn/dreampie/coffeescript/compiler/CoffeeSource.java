@@ -73,7 +73,6 @@ public class CoffeeSource {
     }
     this.resource = resource;
     this.content = this.normalizedContent = loadResource(resource, charset);
-    resolveImports();
   }
 
   /**
@@ -172,59 +171,6 @@ public class CoffeeSource {
    */
   public Map<String, CoffeeSource> getImports() {
     return imports;
-  }
-
-  private void resolveImports() throws IOException {
-    Matcher importMatcher = IMPORT_PATTERN.matcher(normalizedContent);
-    while (importMatcher.find()) {
-      String importedResource = importMatcher.group(5);
-      importedResource = importedResource.matches(".*\\.(le?|c)ss$") ? importedResource : importedResource + ".less";
-      String importType = importMatcher.group(3) == null ? importedResource.substring(importedResource.lastIndexOf(".") + 1) : importMatcher.group(3);
-      if (importType.equals("less")) {
-        logger.debug("Importing %s", importedResource);
-
-        if (!imports.containsKey(importedResource)) {
-          CoffeeSource importedCoffeeSource = new CoffeeSource(getImportedResource(importedResource));
-          imports.put(importedResource, importedCoffeeSource);
-
-          normalizedContent = includeImportedContent(importedCoffeeSource, importMatcher);
-          importMatcher = IMPORT_PATTERN.matcher(normalizedContent);
-        } else {
-          normalizedContent = normalizedContent.substring(0, importMatcher.start(1)) + normalizedContent.substring(importMatcher.end(1));
-          importMatcher = IMPORT_PATTERN.matcher(normalizedContent);
-        }
-      }
-    }
-  }
-
-  private Resource getImportedResource(String importedResource) throws IOException {
-    try {
-      if (importedResource.startsWith("http:") || importedResource.startsWith("https:")) {
-        return new HttpResource(importedResource);
-      } else {
-        return resource.createRelative(importedResource);
-      }
-    } catch (URISyntaxException e) {
-      throw (IOException) new IOException(importedResource).initCause(e);
-    }
-  }
-
-  private String includeImportedContent(CoffeeSource importedCoffeeSource, Matcher importMatcher) {
-    StringBuilder builder = new StringBuilder();
-    builder.append(normalizedContent.substring(0, importMatcher.start(1)));
-
-    String mediaQuery = importMatcher.group(8);
-    if (mediaQuery != null && mediaQuery.length() > 0) {
-      builder.append("@media");
-      builder.append(mediaQuery);
-      builder.append("{\n");
-    }
-    builder.append(importedCoffeeSource.getNormalizedContent());
-    if (mediaQuery != null && mediaQuery.length() > 0) {
-      builder.append("}\n");
-    }
-    builder.append(normalizedContent.substring(importMatcher.end(1)));
-    return builder.toString();
   }
 
   public String getName() {
