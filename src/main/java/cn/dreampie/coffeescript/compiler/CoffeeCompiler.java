@@ -234,7 +234,7 @@ public class CoffeeCompiler {
    * @throws java.io.IOException If the COFFEE file cannot be read or the output file cannot be written.
    */
   public void compile(CoffeeSource input, File output, boolean force) throws IOException, CoffeeException {
-    if (force || (!output.exists() && output.createNewFile()) || output.lastModified() < input.getLastModifiedIncludingImports()) {
+    if (force || (!output.exists() && output.createNewFile()) || output.lastModified() < input.getLastModified()) {
       String data = compile(input);
       FileUtils.writeStringToFile(output, data, encoding);
     }

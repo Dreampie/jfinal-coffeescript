@@ -92,21 +92,15 @@ public class CoffeeScriptCompiler extends AbstractCoffeeScript {
    * @throws cn.dreampie.coffeescript.compiler.CoffeeException if something unexpected occurs.
    */
   public void execute() throws CoffeeException {
-    if (logger.isDebugEnabled()) {
-      logger.debug("sourceDirectory = " + sourceDirectory);
-      logger.debug("outputDirectory = " + outputDirectory);
+      logger.info("sourceDirectory = " + sourceDirectory);
+      logger.info("outputDirectory = " + outputDirectory);
       logger.debug("includes = " + Arrays.toString(includes));
       logger.debug("excludes = " + Arrays.toString(excludes));
       logger.debug("force = " + force);
       logger.debug("coffeeJs = " + coffeeJs);
       logger.debug("skip = " + skip);
-    }
 
     if (!skip) {
-//            Akka.system().scheduler().scheduleOnce(Duration.create(watchInterval, TimeUnit.MILLISECONDS),
-//                    new Runnable() {
-//                        @Override
-//                        public void run() {
       if (watch) {
         logger.info("Watching " + sourceDirectory);
         if (force) {
@@ -125,16 +119,12 @@ public class CoffeeScriptCompiler extends AbstractCoffeeScript {
       } else {
         executeInternal();
       }
-//                        }
-//                    }, Akka.system().dispatcher());
     } else {
       logger.info("Skipping plugin execution per configuration");
     }
   }
 
   private void executeInternal() throws CoffeeException {
-    long start = System.currentTimeMillis();
-
     String[] files = getIncludedFiles();
 
     if (files == null || files.length < 1) {
@@ -145,26 +135,7 @@ public class CoffeeScriptCompiler extends AbstractCoffeeScript {
       }
 
       Object coffeeCompiler = initCoffeeCompiler();
-//            if (watch) {
-//                logger.info("Watching " + sourceDirectory);
-//                if (force) {
-//                    force = false;
-//                    logger.info("Disabled the 'force' flag in watch mode.");
-//                }
-//                Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-//                while (watch && !Thread.currentThread().isInterrupted()) {
-//                    compileIfChanged(files, coffeeCompiler);
-//                    try {
-//                        Thread.sleep(watchInterval);
-//                    } catch (InterruptedException e) {
-//                        logger.error("interrupted");
-//                    }
-//                }
-//            } else {
       compileIfChanged(files, coffeeCompiler);
-//            }
-
-//            logger.info("Complete Coffee compile job finished in " + (System.currentTimeMillis() - start) + " ms");
     }
   }
 
@@ -187,7 +158,7 @@ public class CoffeeScriptCompiler extends AbstractCoffeeScript {
 
       try {
         CoffeeSource coffeeSource = new CoffeeSource(input);
-        long coffeeLastModified = coffeeSource.getLastModifiedIncludingImports();
+        long coffeeLastModified = coffeeSource.getLastModified();
         if (!output.exists() || (force || output.lastModified() < coffeeLastModified) && lastErrorModified < coffeeLastModified) {
           lastErrorModified = coffeeLastModified;
           long compilationStarted = System.currentTimeMillis();
